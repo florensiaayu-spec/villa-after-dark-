@@ -1,0 +1,11 @@
+{
+  "name": "VILLA AFTER DARK",
+  "short_name": "Villa After Dark",
+  "description": "Interactive romance social experiment prototype",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#09090d",
+  "theme_color": "#09090d",
+  "orientation": "portrait"
+}

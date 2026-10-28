@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#09090d">
+<meta name="description" content="VILLA AFTER DARK — interactive romance prototype">
+<link rel="manifest" href="manifest.json">
+<title>VILLA AFTER DARK</title>
+<style>
+:root{--bg:#09090d;--panel:#15141a;--panel2:#201a20;--gold:#d9b77a;--pink:#e58aa9;--text:#f7f1e9;--muted:#b7aeb4;--line:#493a3f}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0%,#38242d 0,#151219 35%,var(--bg) 72%);color:var(--text);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}
+.app{max-width:980px;margin:0 auto;padding:16px 14px 36px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 16px;border-bottom:1px solid var(--line)}
+.brand{font-size:clamp(22px,5vw,34px);letter-spacing:.12em;line-height:.95}.brand span{display:block;color:var(--pink);font-style:italic;font-size:.72em;letter-spacing:.08em;margin-top:6px}
+.pill{border:1px solid #66513b;border-radius:99px;padding:7px 10px;color:var(--gold);font:11px Arial,sans-serif;letter-spacing:.08em}
+.hero{position:relative;overflow:hidden;margin:16px 0;border:1px solid #59444a;border-radius:18px;min-height:210px;background:linear-gradient(90deg,rgba(5,5,9,.92),rgba(5,5,9,.3)),url('https://images.unsplash.com/photo-1613493355974-8b8e9b9b9b9b?auto=format&fit=crop&w=1400&q=80') center/cover,#30212a}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,7,11,.9),transparent 70%)}
+.heroContent{position:relative;padding:24px 20px;max-width:650px}.eyebrow{font:10px Arial,sans-serif;color:var(--gold);letter-spacing:.22em;text-transform:uppercase}
+h1{font-size:clamp(25px,6vw,42px);font-weight:normal;margin:10px 0}.sub{color:#e2d4d4;line-height:1.5;font-size:14px;max-width:520px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 18px}.stat{background:#17141a;border:1px solid var(--line);padding:10px;border-radius:12px}.stat small{display:block;color:var(--muted);font:10px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}.stat strong{display:block;color:var(--gold);font-size:17px;margin-top:5px}
+.layout{display:grid;grid-template-columns:1fr;gap:14px}.card{background:linear-gradient(145deg,rgba(31,25,31,.96),rgba(15,14,19,.98));border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 12px 30px #0003}
+.sectionTitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 12px;font-size:20px;font-weight:normal}.sectionTitle small{font:10px Arial,sans-serif;color:var(--muted);letter-spacing:.1em}
+.sceneTag{font:10px Arial,sans-serif;color:var(--pink);letter-spacing:.18em;text-transform:uppercase}
+.dialogue{font-size:16px;line-height:1.65;white-space:pre-line;margin:12px 0}.speaker{color:var(--gold);font:11px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.choices{display:grid;gap:9px;margin-top:16px}.choice{width:100%;text-align:left;border:1px solid #5d454c;border-radius:12px;padding:13px 14px;background:linear-gradient(90deg,#251b24,#141218);color:var(--text);line-height:1.35;transition:.15s}.choice:hover,.choice:focus{border-color:var(--pink);transform:translateY(-1px);outline:none}.choice b{color:var(--pink);font-weight:normal;margin-right:7px}
+.characterGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.character{padding:11px;border:1px solid var(--line);border-radius:12px;background:#111015;min-width:0}.portrait{height:94px;border-radius:9px;margin-bottom:9px;background:linear-gradient(140deg,#57404b,#211c25 55%,#08080c);display:flex;align-items:end;padding:8px;color:#f8e9db;font-size:11px;letter-spacing:.1em}.character h3{font-size:16px;font-weight:normal;margin:0 0 4px}.character p{font:12px/1.45 Arial,sans-serif;color:var(--muted);margin:0}.meter{height:4px;background:#3a3036;border-radius:4px;margin-top:9px;overflow:hidden}.meter span{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--gold));width:0}
+.log{font:12px/1.6 Arial,sans-serif;color:var(--muted);max-height:150px;overflow:auto}.log p{margin:0 0 7px;padding-bottom:7px;border-bottom:1px solid #30252b}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.secondary{border:1px solid #65505a;background:#17131a;color:var(--text);padding:9px 12px;border-radius:9px;font:12px Arial,sans-serif}.primary{border:1px solid #d8b47a;background:linear-gradient(100deg,#b68b51,#e7c995);color:#191015;padding:12px 16px;border-radius:10px;font:700 12px Arial,sans-serif;letter-spacing:.08em;width:100%}
+.footer{text-align:center;color:#847780;font:10px Arial,sans-serif;letter-spacing:.1em;margin:20px 0 0}
+@media(min-width:720px){.layout{grid-template-columns:1.2fr .8fr}.characterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{min-height:260px}.portrait{height:110px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="brand">VILLA <span>AFTER DARK</span></div><div class="pill">PLAYABLE PROTOTYPE · EP 01</div></header>
+<section class="hero"><div class="heroContent"><div class="eyebrow">12 strangers · 30 days · one villa</div><h1>Desire. Secrets.<br>Every choice leaves a trace.</h1><p class="sub">A romance social experiment. Get to know the residents, read the room, and decide who deserves your trust.</p></div></section>
+<div class="stats">
+  <div class="stat"><small>Hari</small><strong id="dayStat">01 / 30</strong></div>
+  <div class="stat"><small>Reputasi</small><strong id="repStat">Neutral</strong></div>
+  <div class="stat"><small>Rahasia terbuka</small><strong id="secretStat">0 / 12</strong></div>
+</div>
+<div class="layout">
+<main class="card">
+<div class="sceneTag" id="sceneTag">Episode 01 · The Arrival</div>
+<h2 class="sectionTitle" id="sceneTitle">First Impressions <small>21:07 · LOUNGE</small></h2>
+<div class="speaker" id="speaker">Narasi</div>
+<div class="dialogue" id="dialogue">Mobil hitam berhenti di depan villa. Lampu keemasan memantul di permukaan kolam. Dua belas orang asing akan tinggal bersama selama tiga puluh hari—dan belum ada yang tahu seluruh alasan mereka diundang.</div>
+<div class="choices" id="choices"></div>
+<div class="actions"><button class="secondary" id="saveBtn">Simpan progres</button><button class="secondary" id="resetBtn">Mulai ulang</button><button class="secondary" id="profileBtn">Profil Allora</button></div>
+</main>
+<aside>
+<section class="card" style="margin-bottom:14px"><h2 class="sectionTitle">Penghuni villa <small>12 ADULTS</small></h2><div class="characterGrid" id="characters"></div></section>
+<section class="card"><h2 class="sectionTitle">Jejak malam ini <small>LOG</small></h2><div class="log" id="log"><p>21:07 — Allora tiba di villa.</p></div></section>
+</aside>
+</div>
+<div class="footer">VILLA AFTER DARK · ORIGINAL INTERACTIVE STORY · PROTOTYPE</div>
+</div>
+<script>
+const cast=[
+{name:"Alex",age:29,role:"Dominan, misterius",desc:"Sulit ditebak. Mengamati lebih banyak daripada yang ia katakan.",interest:0,trust:0,secret:false},
+{name:"Ryan",age:27,role:"Flirty, humoris",desc:"Gampang akrab, tapi menyimpan lebih banyak pikiran daripada yang terlihat.",interest:0,trust:0,secret:false},
+{name:"Damian",age:31,role:"Kaya, dingin",desc:"Kompetitif dan selalu memperhatikan detail.",interest:0,trust:0,secret:true},
+{name:"Leo",age:28,role:"Gentleman, perhatian",desc:"Membuat orang nyaman. Tidak berarti ia mudah dibaca.",interest:0,trust:0,secret:false},
+{name:"Vanessa",age:28,role:"Percaya diri, kompetitif",desc:"Suka jadi pusat perhatian dan tahu cara membaca ruangan.",interest:0,trust:0,secret:false},
+{name:"Chloe",age:26,role:"Ramah, spontan",desc:"Selalu punya cerita—dan sering tahu gosip sebelum orang lain.",interest:0,trust:0,secret:false},
+{name:"Isabella",age:27,role:"Berani, menggoda",desc:"Tidak takut mengutarakan keinginannya.",interest:0,trust:0,secret:false},
+{name:"Lucas",age:25,role:"Santai, lucu",desc:"Humor adalah senjatanya, tetapi bukan satu-satunya.",interest:0,trust:0,secret:false},
+{name:"Daniel",age:32,role:"Pintar, pendiam",desc:"Mengamati dinamika kelompok sebelum mengambil posisi.",interest:0,trust:0,secret:true},
+{name:"Sophia",age:24,role:"Manis, tulus",desc:"Mudah dekat dengan orang, tetapi mudah terluka juga.",interest:0,trust:0,secret:false},
+{name:"Nathan",age:30,role:"Penyayang, setia",desc:"Suka kepastian. Bisa jadi protektif saat merasa dekat.",interest:0,trust:0,secret:false},
+{name:"Olivia",age:26,role:"Ambisius, mandiri",desc:"Datang untuk menang, apa pun arti kemenangan baginya.",interest:0,trust:0,secret:true}
+];
+let state={scene:"arrival",day:1,rep:0,secrets:0,log:["21:07 — Allora tiba di villa."],flags:{},relationships:{},profile:{name:"Allora Zane",look:"Rambut cokelat bergelombang",style:"Bold dan berkelas",personality:"Misterius dan observan"}};
+const $=id=>document.getElementById(id);
+function addLog(t){state.log.unshift(t);state.log=state.log.slice(0,12);renderLog()}
+function renderLog(){$("log").innerHTML=state.log.map(x=>`<p>${esc(x)}</p>`).join("")}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function renderCast(){$("characters").innerHTML=cast.map((c,i)=>`<article class="character"><div class="portrait">RESIDENT ${String(i+1).padStart(2,"0")}</div><h3>${c.name} <span style="color:#a69aa2;font-size:11px">${c.age}</span></h3><p><strong style="color:#d9b77a;font-weight:normal">${c.role}</strong><br>${c.desc}</p><div class="meter"><span style="width:${Math.max(0,Math.min(100,(state.relationships[c.name]?.interest||0)+20))}%"></span></div></article>`).join("")}
+function setScene(tag,title,time,speaker,body,options){$("sceneTag").textContent=tag;$("sceneTitle").innerHTML=`${title} <small>${time}</small>`;$("speaker").textContent=speaker;$("dialogue").textContent=body;$("choices").innerHTML=options.map((o,i)=>`<button class="choice" data-i="${i}"><b>${String.fromCharCode(65+i)}.</b> ${o.label}</button>`).join("");[...$("choices").querySelectorAll("button")].forEach(b=>b.onclick=()=>options[+b.dataset.i].go());window.scrollTo({top:0,behavior:"smooth"})}
+function updateStats(){$("dayStat").textContent=String(state.day).padStart(2,"0")+" / 30";$("repStat").textContent=state.rep>2?"Intriguing":state.rep< -2?"Guarded":"Neutral";$("secretStat").textContent=state.secrets+" / 12";renderCast();renderLog()}
+function relationship(name,interest,trust=0){state.relationships[name]??={interest:0,trust:0};state.relationships[name].interest+=interest;state.relationships[name].trust+=trust;const c=cast.find(x=>x.name===name);if(c){c.interest=state.relationships[name].interest;c.trust=state.relationships[name].trust}}
+function arrival(){state.scene="arrival";setScene("EPISODE 01 · THE ARRIVAL","First Impressions","21:07 · LOUNGE","Narasi","Kamu melangkah masuk. Ryan sedang membuat Chloe tertawa. Vanessa berdiri di samping Alex, sementara Damian memperhatikan amplop hitam di tangannya. Leo membantu seorang penghuni menemukan kamarnya. Bel berbunyi: semua orang diminta memilih satu orang untuk percakapan privat malam ini.",[
+{label:"Temui Alex. Tatapannya tadi terasa sulit diabaikan.",go:()=>alexScene()},
+{label:"Cari Ryan lagi. Dia tampak mudah diajak bicara.",go:()=>ryanScene()},
+{label:"Dekati Damian dan tanyakan amplop hitam itu.",go:()=>damianScene()},
+{label:"Amati kelompok dulu. Aku tidak perlu terburu-buru.",go:()=>observeScene()}
+]);}
+function alexScene(){state.scene="alex";setScene("EPISODE 01 · PRIVATE CONVERSATION","A Quiet Challenge","21:14 · TERRACE","Alex","Alex berdiri di teras menghadap kolam. Ketika kamu mendekat, ia melirikmu sekilas.\n\nAlex: “Allora, right? Kamu kelihatan seperti orang yang sudah memutuskan apa pendapatmu tentang semua orang.”\n\nIa mengangkat gelasnya sedikit. “Aku salah?”",[
+{label:"“Belum. Aku biasanya mengamati sebelum menilai.”",go:()=>{relationship("Alex",2,2);state.rep++;addLog("21:15 — Allora memberi Alex kesan observan dan tenang.");alexAfter("Alex tersenyum tipis. “Bagus. Kebanyakan orang di sini terlalu sibuk membuat kesan.”")}},
+{label:"“Kamu selalu menginterogasi orang yang baru datang?”",go:()=>{relationship("Alex",1,0);state.rep++;addLog("21:15 — Allora menantang Alex dengan santai.");alexAfter("“Hanya kalau mereka menarik,” jawabnya. Ia tidak menjelaskan apakah itu pujian.")}},
+{label:"“Aku justru penasaran kenapa Vanessa selalu ada di dekatmu.”",go:()=>{relationship("Alex",0,-1);state.flags.vanessaMentioned=true;addLog("21:15 — Allora menyebut Vanessa di depan Alex.");alexAfter("Ekspresi Alex nyaris tak berubah. “Kamu baru di sini dan sudah mengumpulkan teori?”")}}
+])}
+function alexAfter(body){setScene("EPISODE 01 · PRIVATE CONVERSATION","An Unfinished Thought","21:17 · TERRACE","Alex",body+"\n\nDari dalam villa terdengar tawa Vanessa. Alex melirik ke arah pintu, lalu kembali menatapmu.\n\nAlex: “Kamu mau kembali ke pesta, atau masih ingin bicara?”",[
+{label:"Tetap bicara dan tanyakan apa yang ia cari di villa.",go:()=>{relationship("Alex",1,1);addLog("21:19 — Allora memilih melanjutkan percakapan dengan Alex.");secretScene()}},
+{label:"Akhiri percakapan dengan sopan. Jangan terlalu mudah ditebak.",go:()=>{state.rep++;addLog("21:19 — Allora pergi lebih dulu; Alex memperhatikannya.");partyScene("Kamu meninggalkan teras sebelum percakapan kehilangan misterinya. Saat kamu masuk, Alex masih memandang ke arah pintu.")}},
+{label:"Ajak dia kembali ke pesta bersamamu.",go:()=>{relationship("Alex",1,0);addLog("21:19 — Allora dan Alex kembali ke pesta bersama.");partyScene("Alex mengangguk dan berjalan di sampingmu. Vanessa melihat kalian masuk bersama, lalu melanjutkan obrolannya seolah tak terjadi apa-apa.")}}
+])}
+function ryanScene(){state.scene="ryan";setScene("EPISODE 01 · SOCIAL DYNAMICS","Easy Chemistry","21:13 · BAR","Ryan","Ryan sedang menuangkan air soda ketika kamu menghampiri. Chloe baru saja pergi menemui Sophia.\n\nRyan: “Kukira kamu bakal memilih Alex. Dia punya aura tokoh utama yang sangat sadar kamera.”\n\nIa tersenyum, lalu buru-buru menambahkan, “Bercanda. Sedikit.”",[
+{label:"“Kamu memperhatikan siapa yang memperhatikan siapa, ya?”",go:()=>{relationship("Ryan",2,1);state.rep++;addLog("21:14 — Ryan menikmati kecerdikan Allora.");partyScene("Ryan tertawa. “Aku harus tahu medan sebelum mulai bermain.” Ia mengajakmu duduk sebentar, tetapi matanya sesekali mencari Chloe di seberang ruangan.")}},
+{label:"“Kamu dan Chloe kelihatannya dekat.”",go:()=>{relationship("Ryan",1,0);state.flags.ryanChloe=true;addLog("21:14 — Allora menyadari kedekatan Ryan dan Chloe.");partyScene("“Kami baru ngobrol,” kata Ryan. Jawabannya ringan, tapi ia tidak menambahkan apa-apa. Chloe melihat ke arah kalian dari seberang bar.")}},
+{label:"“Aku memilih orang yang paling menarik untuk diajak bicara.”",go:()=>{relationship("Ryan",2,0);addLog("21:14 — Allora menggoda Ryan secara halus.");partyScene("Ryan tertawa lebar. “Kalau begitu, aku akan berusaha mempertahankan gelar itu.” Ia tampak menikmati perhatianmu, meski belum jelas apakah ia sedang serius atau hanya bermain.")}}
+])}
+function damianScene(){state.scene="damian";setScene("EPISODE 01 · SUSPICION","The Black Envelope","21:13 · LIBRARY NOOK","Damian","Damian sedang berdiri dekat rak buku, amplop hitam terselip di bawah tangannya. Ia menutupnya begitu melihatmu.\n\nDamian: “Kamu punya kebiasaan bertanya pada orang yang baru dikenal?”\n\nNada suaranya datar. Bukan marah—lebih seperti sedang menguji reaksimu.",[
+{label:"“Hanya kalau mereka terlihat menyembunyikan sesuatu.”",go:()=>{relationship("Damian",1,0);state.flags.damianSuspicion=true;addLog("21:14 — Damian tahu Allora memperhatikan amplopnya.");secretScene()}},
+{label:"“Aku hanya ingin tahu apakah semua amplop isinya sama.”",go:()=>{relationship("Damian",1,1);addLog("21:14 — Allora bertanya tanpa menuduh Damian.");partyScene("Damian mengamatimu beberapa detik. “Tidak semua orang mendapat instruksi yang sama,” katanya akhirnya. Lalu ia menyimpan amplopnya. “Anggap saja itu petunjuk.”")}},
+{label:"“Tidak juga. Selamat menikmati rahasiamu.”",go:()=>{state.rep++;addLog("21:14 — Allora mundur tanpa memaksa Damian bicara.");partyScene("Sudut bibir Damian bergerak nyaris seperti senyum. “Kamu mungkin lebih pintar dari yang lain.” Ia kembali membuka bukunya, tetapi kini ia memperhatikanmu dari balik halaman.")}}
+])}
+function observeScene(){state.scene="observe";setScene("EPISODE 01 · OBSERVATION","Reading the Room","21:12 · LOUNGE","Narasi","Kamu mengambil minuman dan memilih tempat yang memberimu pandangan ke seluruh lounge.\n\nRyan membuat Chloe tertawa, tetapi Chloe beberapa kali melirik Alex. Vanessa tampak nyaman di dekat Alex—terlalu nyaman untuk orang yang baru bertemu? Damian menyimpan amplopnya di saku bagian dalam. Daniel tidak ikut percakapan; ia justru memperhatikan siapa yang berbicara dengan siapa.",[
+{label:"Dekati Daniel. Dia juga sedang mengamati semua orang.",go:()=>{relationship("Daniel",1,1);addLog("21:14 — Allora dan Daniel saling menyadari kebiasaan observasi mereka.");partyScene("Daniel mengangkat alis saat kamu mendekat. “Akhirnya ada orang lain yang lebih banyak melihat daripada bicara.” Untuk pertama kalinya malam ini, ia tampak tertarik melanjutkan percakapan.")}},
+{label:"Gabung dengan Chloe dan Sophia.",go:()=>{relationship("Chloe",1,1);relationship("Sophia",1,1);addLog("21:14 — Allora bergabung dengan Chloe dan Sophia.");partyScene("Chloe langsung menyambutmu. Sophia tersenyum lega. Dalam beberapa menit, kamu mengetahui nama-nama beberapa penghuni—dan bahwa Vanessa serta Alex ternyata pernah bertemu sebelum malam ini, setidaknya menurut dugaan Chloe.")}},
+{label:"Perhatikan Damian lebih lama tanpa mendekatinya.",go:()=>{state.flags.watchedDamian=true;state.rep++;addLog("21:14 — Allora melihat Damian menyembunyikan amplop.");secretScene()}}
+])}
+function secretScene(){state.scene="secret";setScene("EPISODE 01 · A PRIVATE CLUE","A Different Invitation","21:22 · HALLWAY","Narasi","Saat kamu kembali dari teras, seseorang menyelipkan secarik kertas ke tanganmu tanpa menghentikan langkah.\n\nDi kertas itu tertulis: “Jangan percaya pada cerita pertama yang kamu dengar tentang pasangan mana pun di villa ini.”\n\nTidak ada tanda tangan. Dari ujung lorong, kamu melihat Daniel memasuki ruang makan—dan Damian menghilang dari pandangan.",[
+{label:"Simpan catatan itu dan jangan beri tahu siapa pun.",go:()=>{state.secrets++;state.flags.secretNote=true;addLog("21:22 — Allora menyimpan catatan anonim.");partyScene("Kamu melipat catatan itu dan memasukkannya ke tas. Untuk sekarang, informasi ini hanya milikmu. Tapi siapa pun yang menulisnya tahu sesuatu tentang penghuni villa.")}},
+{label:"Tunjukkan catatan itu kepada Alex.",go:()=>{state.secrets++;state.flags.sharedNote=true;relationship("Alex",1,1);addLog("21:22 — Allora membagikan catatan anonim kepada Alex.");partyScene("Alex membaca catatan itu dua kali. “Jangan langsung percaya orang yang memberimu peringatan,” katanya. “Kadang mereka hanya ingin mengarahkanmu ke kebohongan yang mereka pilih.”")}},
+{label:"Cari Daniel dan tanyakan apakah dia tahu sesuatu.",go:()=>{state.secrets++;relationship("Daniel",1,0);addLog("21:22 — Allora mulai menyelidiki catatan anonim.");partyScene("Daniel mendengarkan tanpa menyela. “Aku tidak menulisnya,” katanya. “Tapi aku juga tidak akan terkejut kalau beberapa orang di sini sudah saling kenal.”")}}
+])}
+function partyScene(body){state.scene="party";setScene("EPISODE 01 · NIGHT ONE","The Party Continues","21:30 · MAIN LOUNGE","Narasi",body+"\n\nDi tengah pesta, bel berbunyi sekali lagi. Suara dari speaker memenuhi ruangan:\n\n“Besok pagi, tantangan pertama dimulai. Malam ini, kalian bebas menentukan siapa yang ingin kalian kenal. Ingat—semua keputusan meninggalkan jejak.”",[
+{label:"Pilih seseorang untuk menghabiskan sisa malam.",go:()=>finalScene()},
+{label:"Pergi ke balkon dan menenangkan pikiran.",go:()=>{state.rep++;addLog("21:40 — Allora memilih menyendiri sebentar.");setScene("EPISODE 01 · NIGHT ONE","A Moment Alone","21:40 · BALCONY","Narasi","Udara malam terasa dingin. Dari balkon, kamu melihat dua sosok berbicara di dekat kolam—Vanessa dan seseorang yang wajahnya tertutup bayangan. Ketika kamu mencoba melihat lebih jelas, mereka berpisah.",[{label:"Kembali ke pesta.",go:()=>finalScene()},{label:"Catat apa yang kamu lihat untuk diselidiki besok.",go:()=>{state.secrets++;addLog("21:42 — Allora mencatat pertemuan misterius di dekat kolam.");finalScene()}}])}}
+])}
+function finalScene(){state.day=1;updateStats();setScene("EPISODE 01 · TO BE CONTINUED","The First Night","23:48 · UPSTAIRS","Narasi","Saat para penghuni mulai menuju kamar, ponsel villa menyala dengan satu notifikasi baru:\n\n“Penghuni terpilih, salah satu dari kalian tidak datang ke sini untuk mencari cinta.”\n\nTidak ada nama. Tidak ada penjelasan.\n\nDi lorong, kamu melihat Alex berhenti membaca notifikasi yang sama. Di ujung lainnya, Damian sudah memasukkan ponselnya ke saku seolah ia tidak terkejut sama sekali.\n\nMalam pertama berakhir. Permainan yang sebenarnya baru dimulai.",[
+{label:"Simpan progres dan akhiri Episode 1.",go:()=>{addLog("23:48 — Episode 1 selesai. Hubungan dan petunjuk tersimpan.");save();setScene("EPISODE 01 COMPLETE","Malam Pertama Berakhir","23:48 · YOUR ROOM","Allora","Kamu menutup pintu kamar. Besok, semua penghuni akan mulai berkompetisi—dan beberapa dari mereka mungkin sudah membentuk aliansi malam ini. Prototipe ini menyimpan progres di perangkatmu.",[{label:"Mainkan ulang dari awal",go:()=>{state={scene:"arrival",day:1,rep:0,secrets:0,log:["21:07 — Allora tiba di villa."],flags:{},relationships:{},profile:state.profile};cast.forEach(c=>{c.interest=0;c.trust=0});updateStats();arrival()}},{label:"Lihat status hubungan",go:()=>statusScene()}])}},
+{label:"Lihat status hubungan sebelum tidur.",go:()=>statusScene()}
+])}
+function statusScene(){const lines=cast.filter(c=>state.relationships[c.name]).map(c=>`${c.name}: ketertarikan ${state.relationships[c.name].interest}, kepercayaan ${state.relationships[c.name].trust}`).join("\n")||"Kamu belum membangun kedekatan yang tercatat dengan penghuni lain.";setScene("PROFILE · RELATIONSHIPS","Hubungan Saat Ini","STATUS","Sistem",lines+"\n\nNilai ini adalah prototipe sederhana; karakter masih akan mendapat sistem sosial yang lebih kompleks di versi berikutnya.",[{label:"Lanjutkan ke akhir malam",go:()=>finalScene()},{label:"Kembali ke awal episode",go:()=>arrival()}])}
+function save(){localStorage.setItem("vad_save",JSON.stringify(state));$("saveBtn").textContent="Tersimpan ✓";setTimeout(()=>$("saveBtn").textContent="Simpan progres",1200)}
+function load(){try{const s=localStorage.getItem("vad_save");if(s){const v=JSON.parse(s);state={...state,...v};}}catch(e){}}
+$("saveBtn").onclick=()=>{save();addLog("Progres disimpan di perangkat ini.")};
+$("resetBtn").onclick=()=>{if(confirm("Mulai ulang cerita dari awal? Progres lokal akan dihapus.")){localStorage.removeItem("vad_save");location.reload()}};
+$("profileBtn").onclick=()=>setScene("PLAYER PROFILE","Allora Zane","CHARACTER","Profil pemain","Nama: Allora Zane\nPenampilan: rambut cokelat bergelombang\nGaya: bold dan berkelas\nKepribadian: misterius dan observan\nRomance: berkembang alami\n\nKamu dapat mengubah profil lebih lanjut di versi berikutnya.",[{label:"Kembali ke cerita",go:()=>arrival()}]);
+load();updateStats();if(state.scene==="arrival")arrival();else arrival();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
+</script>
+</body></html>
